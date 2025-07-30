@@ -10,6 +10,8 @@ def load_image(url):#
         response.raise_for_status()# если будет какая то ошибка то мы получим её вэтой строке
         image_data = BytesIO(response.content)#в эту переменную положим обработанную картинку
         img = Image.open(image_data)# из библиотеки пилой
+        img.thumbnail((600,480), Image.Resampling.LANCZOS)#задаем размер изображения,
+        # способ изменения размера чтобы картинка не сильно страдала
         return ImageTk.PhotoImage(img)#функция вернет картинку
     except Exception as e:
         print(f"Произошла ошибка: {e}")
@@ -22,6 +24,11 @@ def set_image():
         label.config(image=img)
         label.image = img  # присваиваем картинку лайблу чтобы сборщик мусора его не удалил
 
+
+def exit():
+    window.destroy()
+
+
 window = Tk()
 window.title("Cats!")
 window.geometry("600x480")
@@ -29,7 +36,14 @@ window.geometry("600x480")
 label = Label()
 label.pack()
 
-update_button = Button(text="Обновить", command=set_image)
+menu_bar = Menu(window)
+window.config(menu=menu_bar)
+
+file_menu = Menu(menu_bar,tearoff=0)
+menu_bar.add_cascade(label="Файл", menu=file_menu)
+file_menu.add_command(label="загрузить фото", command=set_image)
+file_menu.add_separator()
+file_menu.add_command(label="Выход", command=exit)
 
 url = "https://cataas.com/cat"
 set_image()
