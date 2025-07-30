@@ -9,8 +9,11 @@ def loade_image():#
         response = requests.get()#делаем запрос по ссылке.кладем в переменную респонс
         response.raise_for_status()# если будет какая то ошибка то мы получим её вэтой строке
         image_data = BytesIO(response.content)#в эту переменную положим обработанную картинку
-
-
+        img = Image.open(image_data)# из библиотеки пилой
+        return ImageTk.PhotoImage(img)#функция вернет картинку
+    except Exception as e:
+        print(f"Произошла ошибка: {e}")
+        return None
 
 window = Tk()
 window.title("Cats!")
