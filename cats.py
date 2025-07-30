@@ -26,6 +26,7 @@ def set_image():
 
 
 def exit():
+    window.destroy()
 
 
 window = Tk()
