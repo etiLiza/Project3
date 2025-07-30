@@ -29,7 +29,7 @@ def open_new_window():
 
 
 def exit():
-
+    window.destroy()
 
 window = Tk()
 window.title("Cats!")
